@@ -1,11 +1,14 @@
 # KBC-Quiz-App
 
 
-It is an Android App which is used to save WhatsApp status photos or videos permanently and show it in gallery. Created using Android Studio.
+It is an Android App developed for educational purposes allowing users to prepare for multiple-choice questions with visual animation and sound effects. Created using Android studio.
 
+
+********************************************************************************************************************************************************************************
 Download Apk By Clicking on the Link
 <a href="https://github.com/Mr-Ajay-Singh/Whatsapp-Status-Downloader/releases/download/Android/WhatsApp-Status-Downloader.apk" target="_blank" >Download APK</a>
 
+********************************************************************************************************************************************************************************
 
 <span>
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc1.jpg" width="330" height="150" />

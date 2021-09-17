@@ -6,7 +6,7 @@ It is an Android App developed for educational purposes allowing users to prepar
 
 ********************************************************************************************************************************************************************************
 Download Apk By Clicking on the Link
-<a href="https://github.com/Mr-Ajay-Singh/Whatsapp-Status-Downloader/releases/download/Android/WhatsApp-Status-Downloader.apk" target="_blank" >Download APK</a>
+<a href="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/releases/download/android/KBC_Quiz.apk" target="_blank" >Download APK</a>
 
 ********************************************************************************************************************************************************************************
 

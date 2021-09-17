@@ -8,9 +8,9 @@ Download Apk By Clicking on the Link
 
 
 <span>
-<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc1.jpg" width="350" height="130" />
-<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc2.jpg" width="350" height="130" />
-<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc3.jpg" width="350" height="130" />
+<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc1.jpg" width="330" height="150" />
+<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc2.jpg" width="330" height="150" />
+<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc3.jpg" width="330" height="150" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc4.jpg" width="300" height="150" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc5.jpg" width="300" height="120" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc6.jpg" width="300" height="120" />

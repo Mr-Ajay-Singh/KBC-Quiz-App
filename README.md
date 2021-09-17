@@ -8,7 +8,7 @@ Download Apk By Clicking on the Link
 
 
 <span>
-<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc1.jpg" width="300" height="120" />
+<img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc1.jpg" width="400" height="150" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc2.jpg" width="300" height="120" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc3.jpg" width="300" height="120" />
 <img src="https://github.com/Mr-Ajay-Singh/KBC-Quiz-App/blob/master/app/src/main/res/Kbc/kbc4.jpg" width="300" height="120" />

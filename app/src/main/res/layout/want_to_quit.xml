@@ -30,7 +30,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="WantToQuitDialogNo"
+            android:id="@+id/quitDialogNo"
             android:text="No"
             />
 

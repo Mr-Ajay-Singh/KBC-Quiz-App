@@ -1,5 +1,6 @@
 package com.Cyris.kbc2020.HighScoreTop;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -49,12 +50,15 @@ import java.util.Map;
 public class DailyTop extends Fragment {
 
     FirebaseDatabase database;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,dr1,dr2;
     private RecyclerView recyclerView;
     List<TopEntity> topList;
     TopScoreAdapter adapter;
     LinearLayout progressLoadingLayout;
     LinearLayout networkConnection,noRecord;
+    final SimpleDateFormat timeStampFormat = new SimpleDateFormat("ddMMyyyy");
+    Date todayDate = new Date();
+    final String cur = timeStampFormat.format(todayDate);
 
     public DailyTop() {
         // Required empty public constructor
@@ -82,7 +86,9 @@ public class DailyTop extends Fragment {
         noRecord = view.findViewById(R.id.no_item);
         progressLoadingLayout = view.findViewById(R.id.progress_loading_layout);
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("TopScoreUpdate");
+        databaseReference = database.getReference("TopScoreUpdate1");
+
+        //dr2 = database.getReference("TopScoreUpdate");
         recyclerView = view.findViewById(R.id.recyclerview_in_daily_top);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TopScoreAdapter(getContext(),topList,noRecord);
@@ -90,34 +96,34 @@ public class DailyTop extends Fragment {
         return view;
     }
 
-    Date date,todayDate;
+    Date date;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onStart() {
         super.onStart();
-        final SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd/MM/yyyy");
-        todayDate = new Date();
+
+        //databaseReference.removeValue();
+
+          //dr2.removeValue();
+
+
         if(!isNetworkAvailable())
             networkConnection.setVisibility(View.VISIBLE);
         databaseReference.orderByChild("rank").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.i("entityCheck", String.valueOf(dataSnapshot.getChildrenCount()));
-                for (DataSnapshot snapshot1:dataSnapshot.getChildren()) {
-
+                for (DataSnapshot snapshot1:dataSnapshot.child(cur).getChildren()) {
                 for (DataSnapshot snapshot:snapshot1.getChildren()) {
 
                     FirebaseVariable firebaseVariable;
                     firebaseVariable = snapshot.getValue(FirebaseVariable.class);
                     try {
-                        Log.i("entityCheck", firebaseVariable.getEntity().name);
-                        Log.i("entityCheck", firebaseVariable.getEntity().price);
-                        Log.i("entityCheck", String.valueOf(firebaseVariable.getEntity().price));
-                        date = firebaseVariable.getDate();
-                        String date1 = timeStampFormat.format(date);
-                        String date2 = timeStampFormat.format(todayDate);
-                        Log.i("rankCheck",String.valueOf(firebaseVariable.getEntity().rank));
-                        Log.i("dateCheck",date1+"||"+date2);
+                       String date = firebaseVariable.getDate();
+
+                        String date1 = date;//timeStampFormat.format(date);
+                        String date2 = cur;//timeStampFormat.format(todayDate);
+
                         if(date1.equals(date2)&&firebaseVariable.getEntity().rank!=15)
                             topList.add(firebaseVariable.getEntity());
                     } catch (Exception e)

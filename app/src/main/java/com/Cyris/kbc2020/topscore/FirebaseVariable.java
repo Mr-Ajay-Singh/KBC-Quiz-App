@@ -1,7 +1,5 @@
 package com.Cyris.kbc2020.topscore;
 
-import java.util.Date;
-
 public class FirebaseVariable {
 
     public FirebaseVariable()
@@ -15,14 +13,14 @@ public class FirebaseVariable {
         this.entity = entity;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
     TopEntity entity;
-    Date date;
+    String date;
 }

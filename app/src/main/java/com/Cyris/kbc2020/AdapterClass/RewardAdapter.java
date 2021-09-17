@@ -22,7 +22,6 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
 
     Context context;
     ArrayList<String> rewardPriceData;
-   // int changeColorNumber =-1,changeColorCount=15;
     String colorChangePrice;
 
     public RewardAdapter(Context ctx, ArrayList<String> str)
@@ -34,8 +33,6 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
     public void ChangeColorOfPrice(String str)
     {
         this.colorChangePrice = str;
-       // this.changeColorNumber = num1;
-    //    changeColorCount--;
     }
 
 
@@ -76,15 +73,6 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.RewardView
 
         public void Bind(int pos)
         {
-           /* if(pos == 4||pos == 9||pos == 15)
-            {
-                if(changeColorCount == 4 ||changeColorCount == 9 ||changeColorCount == 15  )
-                {
-                    content_of_recyclerView.setTextColor(Color.BLACK);
-                }
-                else
-                content_of_recyclerView.setTextColor(Color.YELLOW);
-            } */
             content_of_recyclerView.setText(rewardPriceData.get(pos));
             content_of_recyclerView.setTag(rewardPriceData.get(pos));
             content_of_recyclerView.setTextColor(Color.WHITE);

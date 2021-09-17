@@ -30,8 +30,7 @@ public class HomeHighScore extends Fragment {
 
 
     private ArrayList<TopEntity> topList;
-    LinearLayout progressLoadingLayout;
-    LinearLayout networkConnection,noRecord;
+    LinearLayout noRecord;
 
     public HomeHighScore() {
         // Required empty public constructor
@@ -46,7 +45,6 @@ public class HomeHighScore extends Fragment {
     }
 
     RecyclerView recyclerView;
-    TopScoreAdapter topScoreAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

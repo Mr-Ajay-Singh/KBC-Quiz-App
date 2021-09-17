@@ -53,6 +53,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="30sp"
+            android:id="@+id/name_on_times_up"
             android:layout_gravity="center"
             />
 

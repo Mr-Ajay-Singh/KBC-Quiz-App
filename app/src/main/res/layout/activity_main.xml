@@ -12,82 +12,102 @@
         >
 
 
-    <Button
-        android:id="@+id/main_play_button"
-        android:layout_width="190dp"
-        android:layout_height="60dp"
-        android:background="@drawable/main_button_gradient"
-        android:onClick="PlayNow"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/play_now"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        <Button
+            android:id="@+id/main_play_button"
+            android:layout_width="190dp"
+            android:layout_height="60dp"
+            android:background="@drawable/main_button_gradient"
+            android:onClick="PlayNow"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/play_now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.222" />
 
-    <Button
-        android:id="@+id/language_selection"
-        android:layout_width="190dp"
-        android:layout_height="50dp"
-        android:background="@drawable/main_button_gradient"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/language_english_button"
-        android:tag="@string/language_english_button"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:onClick="LanguangeSeletion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.880"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        <Button
+            android:id="@+id/main_level_play"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:background="@drawable/main_button_gradient"
+            android:onClick="PlayLevels"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/levels"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.42" />
 
-    <Button
-        android:id="@+id/exit_from_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/wrong_answer_button"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/exitMain"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        <Button
+            android:id="@+id/language_selection"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:background="@drawable/main_button_gradient"
+            android:onClick="LanguangeSeletion"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:tag="@string/language_english_button"
+            android:text="@string/language_english_button"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.60" />
+        <Button
+            android:id="@+id/high_score"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:background="@drawable/main_button_gradient"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/highScore"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.78" />
 
-    <Button
-        android:id="@+id/high_score"
-        android:layout_width="190dp"
-        android:layout_height="50dp"
-        android:background="@drawable/main_button_gradient"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/highScore"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.880"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        <Button
+            android:id="@+id/exit_from_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/wrong_answer_button"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/exitMain"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.828"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.955" />
 
-    <RelativeLayout
+
+
+        <RelativeLayout
         android:id="@+id/frameLayout"
         android:layout_width="600dp"
         android:layout_height="400dp"
@@ -108,34 +128,32 @@
             android:src="@drawable/gold_circle"
             />
 
-        <ImageView
-            android:id="@+id/rotateCircle1"
-            android:layout_width="574dp"
-            android:layout_height="364dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/gold_circle" />
+            <ImageView
+                android:id="@+id/rotateCircle1"
+                android:layout_width="574dp"
+                android:layout_height="364dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/gold_circle" />
 
-        <ImageView
-            android:id="@+id/kbcLogo"
-            android:layout_width="379dp"
-            android:layout_height="263dp"
-
-
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="107dp"
-            android:layout_marginEnd="114dp"
-            android:layout_marginBottom="62dp"
-            android:src="@drawable/kbc2020_min" />
+            <ImageView
+                android:id="@+id/kbcLogo"
+                android:layout_width="496dp"
+                android:layout_height="323dp"
 
 
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="59dp"
+                android:layout_marginEnd="45dp"
+                android:layout_marginBottom="29dp"
+                android:src="@drawable/educational_quiz" />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
     <ImageView
         android:id="@+id/rate_us"
         android:layout_width="50dp"

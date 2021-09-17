@@ -18,11 +18,6 @@ public class OurApplicationClass extends Application {
         super.onCreate();
         AudienceNetworkAds.initialize(this);
         AdSettings.setIntegrationErrorMode(INTEGRATION_ERROR_CRASH_DEBUG_MODE);
-       /* MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        }); */
 
     }
 

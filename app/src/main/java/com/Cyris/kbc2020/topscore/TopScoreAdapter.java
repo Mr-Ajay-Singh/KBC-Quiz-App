@@ -50,10 +50,6 @@ public class TopScoreAdapter extends RecyclerView.Adapter<TopScoreAdapter.TopSco
             holder.highScoreParent.setBackgroundColor(context.getColor(R.color.golden));
         else
             holder.highScoreParent.setBackgroundColor(context.getColor(R.color.silver));
-        /*if(position==1)
-            holder.highScoreParent.setBackgroundColor(context.getColor(R.color.silver));*/
-       /* if(position==2)
-            holder.highScoreParent.setBackgroundColor(context.getColor(R.color.bronze));*/
         holder.highTopCount.setText(String.valueOf(position+1)+".");
         holder.highScore.setText(topList.get(position).name);
         holder.highScoreCash.setText(topList.get(position).price);

@@ -4,12 +4,16 @@
         android:title="Top Score"
         android:icon="@drawable/high_score"
         />
-    <item android:id="@+id/weekly_top"
+   <!-- <item android:id="@+id/weekly_top"
         android:title="Weekly Top"
         android:icon="@drawable/weekly"
-        />
+        />-->
     <item android:id="@+id/daily_top"
-        android:title="Daily Top"
+        android:title="Today's Top"
+        android:icon="@drawable/daily"
+        />
+    <item android:id="@+id/level100"
+        android:title="Monthly Level 43"
         android:icon="@drawable/daily"
         />
 

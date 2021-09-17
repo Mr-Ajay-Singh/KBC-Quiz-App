@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Database;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -31,6 +32,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Cyris.kbc2020.Levels.ShowLevels;
 import com.Cyris.kbc2020.topscore.TopDatabase;
 import com.Cyris.kbc2020.topscore.TopEntity;
 import com.Cyris.kbc2020.topscore.TopScoreAdapter;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +87,8 @@ public class MainActivity extends AppCompatActivity {
         highScore = findViewById(R.id.high_score);
         noInternetConnection = findViewById(R.id.no_internet_connection);
         okNoInternet = findViewById(R.id.ok_no_internet_button);
-
         topList = new ArrayList<>();
-        language = String.valueOf(R.string.language_english);
+        language = getString(R.string.language_english);
 
         mediaPlayer = MediaPlayer.create(this,R.raw.kbc_welcome_long);
         mediaPlayer.start();
@@ -110,12 +112,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         playButton.startAnimation(animationUpDown);
-        exitInterstitialAdF = new InterstitialAd(this, getString(R.string.exitInterstitialFacebook));
-        exitInterstitialAdF.loadAd();
-        soundInterstitialAdF = new InterstitialAd(this,getString(R.string.soundInterstitialFacebook));
-        soundInterstitialAdF.loadAd();
-        languageInterstitialAdF = new InterstitialAd(this,getString(R.string.languageInterstitialFacebook));
-        languageInterstitialAdF.loadAd();
+        try {
+            exitInterstitialAdF = new InterstitialAd(this, getString(R.string.exitInterstitialFacebook));
+            exitInterstitialAdF.loadAd();
+            soundInterstitialAdF = new InterstitialAd(this, getString(R.string.soundInterstitialFacebook));
+            soundInterstitialAdF.loadAd();
+            languageInterstitialAdF = new InterstitialAd(this, getString(R.string.languageInterstitialFacebook));
+            languageInterstitialAdF.loadAd();
+        }catch (Exception e)
+        {
+            Log.i("LOG",e.getMessage());
+        }
 
      /*   mInterstitialAd = new InterstitialAd(MainActivity.this);
         mInterstitialAd.setAdUnitId(getString(R.string.languageInterestial));
@@ -280,8 +287,18 @@ public class MainActivity extends AppCompatActivity {
     {
         ReleaseMediaPlayer();
         Intent intent = new Intent(this,PlayGame.class);
-        intent.putExtra(String.valueOf(R.string.select_language),language);
-        intent.putExtra(String.valueOf(R.string.sound_on_off),soundOnOff);
+        intent.putExtra(getString(R.string.select_language),language);
+        intent.putExtra(getString(R.string.sound_on_off),soundOnOff);
+        startActivity(intent);
+    }
+
+    public void PlayLevels(View view)
+    {
+        ReleaseMediaPlayer();
+        Intent intent = new Intent(this, ShowLevels.class);
+        intent.putExtra(getString(R.string.select_language),language);
+        Log.i("language",language);
+        intent.putExtra(getString(R.string.sound_on_off),soundOnOff);
         startActivity(intent);
     }
 
@@ -296,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             mInterstitialAd.show(); */
         if(tv.getTag().equals(R.string.language_hindi_button))
         {
-            language = String.valueOf(R.string.language_english);
+            language = getString(R.string.language_english);
             Toast.makeText(MainActivity.this,"English Selected",Toast.LENGTH_LONG);
             tv.setText(R.string.language_english_button);
             tv.setBackgroundResource(R.drawable.main_button_gradient);
@@ -304,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else//(tv.getText().equals(String.valueOf(R.string.language_hindi_button)))
         {
-            language = String.valueOf(R.string.language_hindi);
+            language = getString(R.string.language_hindi);
             Toast.makeText(MainActivity.this,"Hindi Selected",Toast.LENGTH_LONG);
             tv.setText(R.string.language_hindi_button);
             tv.setTag(R.string.language_hindi_button);
@@ -411,13 +428,15 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pending3 = PendingIntent.getBroadcast(getApplicationContext(), 44, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Schdedule notification
         AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        //10 14 19
+        long currentTimeMillis = System.currentTimeMillis();
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.HOUR_OF_DAY,10);
         calendar1.set(Calendar.MINUTE, 00);
         calendar1.set(Calendar.SECOND, 00);
 
         Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(Calendar.HOUR_OF_DAY, 14);
+        calendar2.set(Calendar.HOUR_OF_DAY,14);
         calendar2.set(Calendar.MINUTE, 00);
         calendar2.set(Calendar.SECOND, 00);
 
@@ -426,8 +445,19 @@ public class MainActivity extends AppCompatActivity {
         calendar3.set(Calendar.MINUTE, 00);
         calendar3.set(Calendar.SECOND, 00);
 
+        Calendar calendar4 = Calendar.getInstance();
+
+        if(calendar1.before(calendar4)) {
+            calendar1.add(Calendar.DATE, 1);
+            Log.i("getData",calendar1.toString());
+        }
+        if(calendar2.before(calendar4))
+                    calendar2.add(Calendar.DATE,1);
+        if(calendar3.before(calendar4))
+                    calendar3.add(Calendar.DATE,1);
+
         manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar1.getTimeInMillis(), pending1);
-        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pending2);
+        //manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pending2);
         manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar3.getTimeInMillis(), pending3);
 
 

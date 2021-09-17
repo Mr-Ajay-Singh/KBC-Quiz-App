@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.Cyris.kbc2020.HighScoreTop.DailyTop;
 import com.Cyris.kbc2020.HighScoreTop.HomeHighScore;
+import com.Cyris.kbc2020.HighScoreTop.Level100;
 import com.Cyris.kbc2020.HighScoreTop.WeeklyTop;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,7 +17,6 @@ public class HighScore extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     Fragment selectedFragment = null;
-    HomeHighScore homeHighScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +38,10 @@ public class HighScore extends AppCompatActivity {
                     case R.id.daily_top:
                         selectedFragment = new DailyTop();
                         break;
-                    case R.id.weekly_top:
-                        selectedFragment = new WeeklyTop();
-                        break;
+                   case R.id.level100:
+                       selectedFragment = new Level100();
+                       break;
+
 
                }
                getSupportFragmentManager().beginTransaction().replace(R.id.high_score_fragment_place,selectedFragment).commit();

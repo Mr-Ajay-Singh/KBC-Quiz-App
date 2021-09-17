@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name:"
+            android:id="@+id/name_on_wrong_ans"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="30sp"
@@ -93,7 +94,7 @@
         android:layout_weight="1"
         android:textAllCaps="false"
          />
-        <Button
+       <!-- <Button
         android:id="@+id/watch_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
         android:background="@drawable/correct_answer_button"
         android:layout_gravity="center"
         android:textAllCaps="false"
-         />
+         />-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -60,7 +60,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-medium"
-        android:text="@string/accuracy60"
         android:id="@+id/pofAccuracy"
         android:layout_gravity="center"
         android:textSize="15sp"

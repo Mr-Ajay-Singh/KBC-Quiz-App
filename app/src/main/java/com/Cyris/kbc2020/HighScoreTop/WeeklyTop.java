@@ -99,14 +99,14 @@ public class WeeklyTop extends Fragment {
                             Log.i("entityCheck", firebaseVariable.getEntity().name);
                             Log.i("entityCheck", firebaseVariable.getEntity().price);
                             Log.i("entityCheck", String.valueOf(firebaseVariable.getEntity().price));
-                            date = firebaseVariable.getDate();
+                            String date = firebaseVariable.getDate();
                             String date1 = timeStampFormat.format(date);
                             String date2 = timeStampFormat.format(todayDate);
                             String date3 = timeStampFormat.format(sevenDay);
                             Log.i("rankCheck", String.valueOf(firebaseVariable.getEntity().rank));
                             Log.i("dateCheck", date1 + "||" + date2 + "||" + date3);
-                            if (date.after(sevenDay) && date.before(todayDate) && firebaseVariable.getEntity().rank != 15)
-                                topList.add(firebaseVariable.getEntity());
+                            /*if (date.after(sevenDay) && date.before(todayDate) && firebaseVariable.getEntity().rank != 15)
+                                topList.add(firebaseVariable.getEntity());*/
                         } catch (Exception e) {
                             Log.i("entityCheck", e + " error");
                         }

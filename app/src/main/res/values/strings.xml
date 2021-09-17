@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">KBC 2020</string>
+    <string name="app_name">Har koi banega crorepati</string>
     <string name="play_now">Play Now</string>
+    <string name="levels">Levels</string>
     <string name="select_language">Language</string>
     <string name="language_hindi">Hindi</string>
     <string name="language_english">English</string>
@@ -19,8 +20,6 @@
     <string name="soundOff">SoundOff</string>
     <string name="soundOffText">Sound:Off</string>
     <string name="highScore">High Score</string>
-    <string name="accuracy60">Accuracy of this answer is 60% Watch Ad for 100% accurate \n click on Telephone logo</string>
-    <string name="accuracy100">Now this is your correct answer</string>
     <string name="wrongAns">Stay connected to internet to make your record worldwide</string>
     <string name="wrongAnsAd">Watch Ad to get one More chance</string>
     <string name="internetConnection">Check your internet connection...</string>
@@ -44,6 +43,16 @@
     <string name="onLostInterstitialFacebook">213237363119671_213241556452585</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- this is extra details-->
+    <string name="level_reached_preferences">level reached</string>
+    <string name="level_to_play">level to play</string>
+    <string name="times_up_level">Times up try to give answer little fast!!</string>
+    <string name="wrong_ans_level">Wrong Answer but dont worry you can play again!!</string>
+    <string name="quit_level">You quit so you need to play this level again!!</string>
+    <string name="you_won_level">You won Level </string>
+    <string name="won_level_suggestion">IMPORTANT: Stay Connected to internet</string>
+    <string name="check_alpha_num">make sure your name contains alphabet and numbers only</string>
 
 
 

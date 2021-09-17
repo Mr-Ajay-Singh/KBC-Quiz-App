@@ -83,16 +83,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 
-public class PlayGame extends AppCompatActivity implements RewardedVideoAdListener {
-    TextView question, option1, option2, option3, option4;
+public class PlayGame extends AppCompatActivity {
+    TextView question, option1, option2, option3, option4,showRewardAll,countDownText;
     ArrayList<QuestionAnswerObjectClass> data = new ArrayList<>();
     CountDownTimer countDownTimer;
     ArrayList<TextView> opt;
-    ArrayList<String> priceData;
-    ArrayList<String> priceInfo;
+    ArrayList<String> priceData,priceInfo;
     QuestionAnswerObjectClass quacObject;
-    int getQuacCount = 0, priceCount = 13, questionCount = 0, randomSelection = 0;//0,13
-    Dialog dialog, dlg, pofDialog, wantToQuitDialog,wonDialog;
+    int getQuacCount = 0, priceCount = 13, randomSelection = 0;//0,13
+    long timerCount;
+    Dialog dialog, dlg, pofDialog, wantToQuitDialog,wonDialog,timesUpDialog;
     RecyclerView rewardInfoRecyclerView;
     LinearLayoutManager rewardLayoutmanager;
     RewardAdapter rewardAdapter;
@@ -100,26 +100,17 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
     LinearLayout layout1, layout2, layout3, layout4;
     Handler handler = new Handler();
     Animation animation;
-    Boolean isHandlerActive = false,isTimerContinue=true;
-    String language = "";
+    Boolean isHandlerActive = false,isTimerContinue=true,soundOnOff,internetToLoadAd = false;
+    String language = "",AdSelection;
     MediaPlayer mediaPlayer;
-    Boolean soundOnOff;
-    //private InterstitialAd mInterstitialAd;
     Button quitDialogYes,exitOnWrongAnswer;
     EditText nameText;
-    TextView showRewardAll;
-    TextView countDownText;
-    long timerCount;
-   // private RewardedVideoAd mRewardedVideoMain,mRewardedVideoPhone;
-    String AdSelection;
-    int watchAdCount=0;
-    boolean internetToLoadAd = false;
-    Dialog timesUpDialog;
     private InterstitialAd onLostInterstitialAdF;
-    private RewardedVideoAd rewardedVideoMainFacebook;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
-    private Date myDate;
+    final SimpleDateFormat timeStampFormat = new SimpleDateFormat("ddMMyyyy");
+    Date todayDate = new Date();
+    String cur = timeStampFormat.format(todayDate);
 
 
     @Override
@@ -127,15 +118,15 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_game);
         Intent intent = getIntent();
-        language = intent.getStringExtra(String.valueOf(R.string.select_language));
+        language = intent.getStringExtra(getString(R.string.select_language));
         countDownText = findViewById(R.id.countdownTimer);
         showRewardAll = findViewById(R.id.show_reward_all);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("TopScoreUpdate");
+        databaseReference = database.getReference("TopScoreUpdate1");
 
-        soundOnOff = intent.getBooleanExtra(String.valueOf(R.string.sound_on_off), true);
+        soundOnOff = intent.getBooleanExtra(getString(R.string.sound_on_off), true);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         random = new Random();
@@ -143,7 +134,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         // pie= AnyChart.pie();
 
         animation = new AnimationUtils().loadAnimation(this, R.anim.price_dialog_in);
-        if (language.equals(String.valueOf(R.string.language_english)))
+        if (language.equals(getString(R.string.language_english)))
             data = QuestionSet1.getAllDataFromSet1();
         else
             data = HindiQuestionSet1.getAllDataFromHindiSet1();
@@ -155,18 +146,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         onLostInterstitialAdF.loadAd();
 
 
-        rewardedVideoMainFacebook = new RewardedVideoAd(this,getString(R.string.playAgainRewardedFacebook));
-        rewardedVideoMainFacebook.setAdListener(this);
-        rewardedVideoMainFacebook.loadAd();
-                /*mInterstitialAd = new InterstitialAd(PlayGame.this);
-                mInterstitialAd.setAdUnitId(getString(R.string.onLostInterestial));
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());*/
 
-       /* mRewardedVideoMain = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoMain.setRewardedVideoAdListener(this);
-
-        mRewardedVideoPhone = MobileAds.getRewardedVideoAdInstance(this);
-        mRewardedVideoPhone.setRewardedVideoAdListener(this); */
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -213,10 +193,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
     }
 
     public void ClickAnswer(View view) {
-        // TextView tv = (TextView) view;
-        // tv.setTextColor(Color.YELLOW);
-
-        if (isHandlerActive) {
+       if (isHandlerActive) {
             if(countDownTimer!=null)
             {
                 countDownTimer.cancel();
@@ -244,9 +221,6 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
                             CallWonGameActivity();
                             return;
                         }
-                        if(getQuacCount==7)
-                            ThreeLakh20Player();
-                        else
                             RightAnsPlayer();
 
                         handler.postDelayed(new Runnable() {
@@ -270,21 +244,21 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
 
     }
 
-    public void SetData() {
+    private void SetData() {
 
         layout1.setClickable(true);
         layout2.setClickable(true);
         layout3.setClickable(true);
         layout4.setClickable(true);
         if (getQuacCount == 3) {
-            if (language.equals(String.valueOf(R.string.language_english)))
+            if (language.equals(getString(R.string.language_english)))
                 data = QuestionSet2.getAllDataFromSet2();
             else
                 data = HindiQuestionSet2.getAllDataFromHindiSet2();
         }
         if (getQuacCount == 8) {
-            if (language.equals(String.valueOf(R.string.language_english)))
-                data = QuestionSet3.getAllDataFromHindiSet3();
+            if (language.equals(getString(R.string.language_english)))
+                data = QuestionSet3.getAllDataFromSet3();
             else
                 data = HindiQuestionSet3.getAllDataFromHindiSet3();
         }
@@ -310,7 +284,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
     }
 
 
-    public void WrongAnswerResponse() {
+    private void WrongAnswerResponse() {
         if (option1.getTag().equals(quacObject.getAnswer()))
             layout1.setBackground(ContextCompat.getDrawable(PlayGame.this, R.drawable.correct_answer_button));
         else if (option2.getTag().equals(quacObject.getAnswer()))
@@ -332,7 +306,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         cashWon = dialog.getWindow().findViewById(R.id.cash_prize_won);
         exitOnWrongAnswer = dialog.findViewById(R.id.exit_from_wrong);
         Button okButton = dialog.findViewById(R.id.okButtonInWrongAnswer);
-        Button watchAd = dialog.findViewById(R.id.watch_ad);
+       // Button watchAd = dialog.findViewById(R.id.watch_ad);
         TextView wrongAnsText = dialog.findViewById(R.id.text_wrong_answer);
         final TopEntity entity = new TopEntity();
         dialog.setCancelable(false);
@@ -363,38 +337,10 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
             entity.price = "₹ 7 Crores";
             entity.rank =1;
         }
-
-        if(getQuacCount<8&&watchAdCount==0)
-        {
-            watchAd.setVisibility(View.VISIBLE);
-            watchAdCount++;
-            wrongAnsText.setText(getString(R.string.wrongAnsAd));
-        }
-        else
-        {
-            watchAd.setVisibility(View.GONE);
             wrongAnsText.setText(getString(R.string.wrongAns));
-        }
 
-        watchAd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AdSelection = "Main";
-               if(rewardedVideoMainFacebook!=null &&rewardedVideoMainFacebook.isAdLoaded())
-               {
-                   rewardedVideoMainFacebook.show();
-                    internetToLoadAd = true;
-                }
 
-            if(!isNetworkAvailable()) {
-                Toast.makeText(PlayGame.this,"No Internet Connection!!!",Toast.LENGTH_SHORT).show();
-            }
-            else if(isNetworkAvailable()&&internetToLoadAd)
-            {
-                internetToLoadAd = false;
-            }
-            }
-        });
+
 
 
 
@@ -440,23 +386,20 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(dialog!=null)
+                if(dialog!=null&&!dialog.isShowing()&&!isFinishing())
                     dialog.show();
             }
         }, soundOnOff ? 1500 : 0);
     }
 
     private void AdOnLostMethodInterstitial() {
-        if(onLostInterstitialAdF!=null&&onLostInterstitialAdF.isAdLoaded())
-        {
+        if(onLostInterstitialAdF!=null&&onLostInterstitialAdF.isAdLoaded()) {
             onLostInterstitialAdF.show();
         }
-                   /* if(mInterstitialAd.isLoaded())
-                        mInterstitialAd.show(); */
     }
 
 
-    public void SetRecyclerViewRewardActivity() {
+    private void SetRecyclerViewRewardActivity() {
         dlg = new Dialog(this);
         dlg.setContentView(R.layout.activity_of_reward_info);
         Window window = dlg.getWindow();
@@ -469,12 +412,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         rewardInfoRecyclerView.setAdapter(rewardAdapter);
     }
 
-    public void CallRewardActivity(final LinearLayout layout) {
-
-     /*   if (getQuacCount == 1 || priceCount == 15) {
-            SetRecyclerViewRewardActivity();
-
-        } */
+    private void CallRewardActivity(final LinearLayout layout) {
      showRewardAll.setVisibility(View.VISIBLE);
      showRewardAll.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -554,7 +492,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         countDownTimer.start();
     }
 
-    public void CallWonGameActivity() {
+    private void CallWonGameActivity() {
         wonDialog = new Dialog(this);
         wonDialog.setContentView(R.layout.you_won);
         wonDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -623,7 +561,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
 
 
 
-   public void FiftyFiftyFunctionality(View view)
+    public void FiftyFiftyFunctionality(View view)
     {
         if(isHandlerActive)
         {
@@ -680,18 +618,11 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
             optionsName.add("Option D: ");
 
 
-            apf1 = apfDialog.findViewById(R.id.audience_poll_op1);
-            apf2 = apfDialog.findViewById(R.id.audience_poll_op2);
-            apf3 = apfDialog.findViewById(R.id.audience_poll_op3);
-            apf4 = apfDialog.findViewById(R.id.audience_poll_op4);
+
 
             getAudiencePoll a1=new getAudiencePoll(),a2=new getAudiencePoll(),a3=new getAudiencePoll(),a4 = new getAudiencePoll();
             apf.add(a1);apf.add(a2);apf.add(a3);apf.add(a4);
 
-           /* apf.add(apf1);
-            apf.add(apf2);
-            apf.add(apf3);
-            apf.add(apf4); */
 
             randomSelection = random.nextInt(4);
             randomO = 40 + random.nextInt(20);
@@ -816,7 +747,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
        }
    }
 
-   public void PhoneOfFriendFunctionality(View view)
+    public void PhoneOfFriendFunctionality(View view)
    {
        if(isHandlerActive) {
 
@@ -883,11 +814,18 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
 
 
 
-    public void WantToQuitDialog()
+    private void WantToQuitDialog()
     {
         wantToQuitDialog = new Dialog(this);
         wantToQuitDialog.setContentView(R.layout.want_to_quit);
         quitDialogYes = wantToQuitDialog.findViewById(R.id.quitDialogYes);
+        Button quitDialogNo = wantToQuitDialog.findViewById(R.id.quitDialogNo);
+        quitDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wantToQuitDialog.dismiss();
+            }
+        });
         if(!PlayGame.this.isFinishing()) {
          try {
              if(wantToQuitDialog!=null&&!wantToQuitDialog.isShowing())
@@ -902,7 +840,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
 
     }
 
-    public void WantToQuitDialogYes()
+    private void WantToQuitDialogYes()
     {
 
         quitDialogYes.setOnClickListener(new View.OnClickListener() {
@@ -913,6 +851,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
                 {
                     countDownTimer.cancel();
                     countDownTimer = null;
+                    wantToQuitDialog.dismiss();
 
                 }
                 ReleaseMediaPlayer();
@@ -944,19 +883,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
             exit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final String name = nameText.getText().toString();
-                            if(!name.matches(""))
-                            {
-                                entity.name = name;
-                                HighScoreAddAsync score = new HighScoreAddAsync(PlayGame.this);
-                                score.execute(entity);
-                                SendDataToDatabase(entity);
-                                wantToQuitDialog.dismiss();
-                                AdOnLostMethodInterstitial();
-                            }
-                            else {
-                                exitDialog1.dismiss();
-                            }
+                            exitDialog1.dismiss();
                             PlayGame.this.finish();
                         }
                     });
@@ -970,8 +897,9 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
                                 entity.name = name;
                                 HighScoreAddAsync score = new HighScoreAddAsync(PlayGame.this);
                                 score.execute(entity);
+                                if(!entity.price.equals("₹0"))
                                 SendDataToDatabase(entity);
-                                wantToQuitDialog.dismiss();
+                                exitDialog1.dismiss();
                                 AdOnLostMethodInterstitial();
                             }
                             else {
@@ -988,7 +916,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
     }
 
 
- public void TimesUpDialog()
+    private void TimesUpDialog()
     {
 
                 timesUpDialog = new Dialog(PlayGame.this);
@@ -1051,26 +979,11 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         timesUpMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = nameText.getText().toString();
-                if(!text.matches("")) {
-                    entity.name = text;
-                    HighScoreAddAsync score = new HighScoreAddAsync(PlayGame.this);
-                    score.execute(entity);
-                    SendDataToDatabase(entity);
-                    AdOnLostMethodInterstitial();
+                AdOnLostMethodInterstitial();
 
-                    if(timesUpDialog!=null&&timesUpDialog.isShowing())
-                        timesUpDialog.dismiss();
-                    PlayGame.this.finish();
-                }
-                else {
-
-                    AdOnLostMethodInterstitial();
-
-                    if(timesUpDialog!=null&&timesUpDialog.isShowing())
-                        timesUpDialog.dismiss();
-                    finish();
-                }
+                if(timesUpDialog!=null&&timesUpDialog.isShowing())
+                    timesUpDialog.dismiss();
+                finish();
             }
         });
 
@@ -1108,39 +1021,36 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         SimpleDateFormat timeStampFormat = new SimpleDateFormat("dd/MM/yyyy");
         //myDate = new Date();
         Date date = new Date();
-        variable.setDate(date);
+        variable.setDate(cur);
         //String date = timeStampFormat.format(myDate);
         try {
+            if(!entity.name.contains(".")&&!entity.name.contains("#")&&!entity.name.contains("$")&&!entity.name.contains("[")&&!entity.name.contains("]")&&entity.rank!=15)
+            {
+                databaseReference.child(cur).child(String.valueOf(entity.rank)).child(entity.name).setValue(variable).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.i("TaskState", "SuccessFul");
+                        } else {
+                            Log.i("TaskState", "Failed");
+                        }
 
-
-            databaseReference.child(String.valueOf(entity.rank)).child(entity.name).setValue(variable).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Log.i("TaskState", "SuccessFul");
-                    } else {
-                        Log.i("TaskState", "Failed");
                     }
-
-                }
-            });
+                });
+            }
         }catch (Exception e)
         {
             Log.i("LOG",e.getMessage());
         }
     }
 
-    public void WantToQuitDialogNo(View view)
-    {
-        wantToQuitDialog.dismiss();
-    }
 
     @Override
     public void onBackPressed() {
         WantToQuitDialog();
     }
 
-    public void HideTextQuestionAnswer()
+    private void HideTextQuestionAnswer()
     {
         question.setText("");
         option1.setText("");
@@ -1163,7 +1073,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
 
 
 
-    public void FirstQuesPlayer()
+    private void FirstQuesPlayer()
     {
         if(soundOnOff)
         {
@@ -1188,7 +1098,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void LockQuesPlayer()
+    private void LockQuesPlayer()
     {
         if(soundOnOff) {
             if (mediaPlayer != null) {
@@ -1203,7 +1113,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void NextQuesPlayer()
+    private void NextQuesPlayer()
     {
         if(soundOnOff) {
             if (mediaPlayer != null) {
@@ -1227,7 +1137,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void SuspencePlayer()
+    private void SuspencePlayer()
     {
         if(soundOnOff) {
             if (mediaPlayer != null) {
@@ -1243,7 +1153,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void AudiencePollPlayer()
+    private void AudiencePollPlayer()
     {
         if(soundOnOff) {
             if (mediaPlayer != null) {
@@ -1258,7 +1168,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void WrongAnsPlayer()
+    private void WrongAnsPlayer()
     {
         if(soundOnOff)
         {
@@ -1278,7 +1188,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void LifeLinePlayer()
+    private void LifeLinePlayer()
     {
         if(soundOnOff)
         {
@@ -1303,7 +1213,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void RightAnsPlayer()
+    private void RightAnsPlayer()
     {
         if(soundOnOff)
         {
@@ -1323,7 +1233,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void TikTikSoundPlayer()
+    private void TikTikSoundPlayer()
     {
         if(soundOnOff)
         {
@@ -1344,28 +1254,8 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void ThreeLakh20Player()
-    {
-        if(soundOnOff)
-        {
 
-
-            if(mediaPlayer!=null)
-            {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-
-            mediaPlayer = MediaPlayer.create(this,R.raw.three_lakh_20thousan);
-            mediaPlayer.start();
-
-        }
-    }
-
-
-    public void TimesUpPlayer()
+    private void TimesUpPlayer()
     {
         if(soundOnOff)
         {
@@ -1385,7 +1275,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void WelcomeThemePlayer()
+    private void WelcomeThemePlayer()
     {
         if(soundOnOff)
         {
@@ -1403,7 +1293,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void YouWonPlayer()
+    private void YouWonPlayer()
     {
         if(soundOnOff)
         {
@@ -1428,7 +1318,7 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
         }
     }
 
-    public void ReleaseMediaPlayer()
+    private void ReleaseMediaPlayer()
     {
         if(soundOnOff)
         {
@@ -1462,131 +1352,10 @@ public class PlayGame extends AppCompatActivity implements RewardedVideoAdListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(rewardedVideoMainFacebook!=null)
-            rewardedVideoMainFacebook.destroy();
         if(onLostInterstitialAdF!=null)
             onLostInterstitialAdF.destroy();
         if(countDownTimer!=null)
             countDownTimer.cancel();
-    }
-
-
-
-
-
-
-
-
-
-/*
-    @Override
-    public void onRewardedVideoAdLoaded() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdOpened() {
-
-    }
-
-    @Override
-    public void onRewardedVideoStarted() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdClosed() {
-
-    }
-
-    @Override
-    public void onRewarded(RewardItem rewardItem) {
-
-
-
-    }
-
-    @Override
-    public void onRewardedVideoAdLeftApplication() {
-
-    }
-
-    @Override
-    public void onRewardedVideoAdFailedToLoad(int i) {
-
-    }
-*/
-
-    @Override
-    public void onRewardedVideoCompleted() {
-        Log.i("AdSelection",AdSelection);
-        if(AdSelection.equals("Main"))
-        {
-            Log.i("AdSelection",AdSelection+" working 1");
-            LinearLayout layout1,layout2,layout3,layout4;
-            layout1 = findViewById(R.id.layout_option1);
-            layout2 = findViewById(R.id.layout_option2);
-            layout3 = findViewById(R.id.layout_option3);
-            layout4 = findViewById(R.id.layout_option4);
-
-            layout1.setBackground(ContextCompat.getDrawable(PlayGame.this, R.drawable.main_button_gradient));
-            layout2.setBackground(ContextCompat.getDrawable(PlayGame.this, R.drawable.main_button_gradient));
-            layout3.setBackground(ContextCompat.getDrawable(PlayGame.this, R.drawable.main_button_gradient));
-            layout4.setBackground(ContextCompat.getDrawable(PlayGame.this, R.drawable.main_button_gradient));
-            Log.i("AdSelection",AdSelection+" working 1");
-            isTimerContinue = false;
-            if(countDownTimer!=null)
-                countDownTimer.cancel();
-            if(soundOnOff)
-            {
-                if(getQuacCount<8)
-                    TikTikSoundPlayer();
-                else
-                    LifeLinePlayer();
-            }
-
-            CountDownTimerCall(45000);
-            getQuacCount--;
-            SetData();
-            if(dialog.isShowing())
-                dialog.dismiss();
-
-        }
-        else
-        {
-            if(pofDialog.isShowing())
-            {
-                TextView pof = pofDialog.findViewById(R.id.phone_of_friend_tv);
-                pof.setText(quacObject.getAnswer());
-                TextView accuracyText = pofDialog.findViewById(R.id.pofAccuracy);
-                accuracyText.setText(getString(R.string.accuracy100));
-            }
-        }
-    }
-
-    @Override
-    public void onError(Ad ad, AdError adError) {
-
-    }
-
-    @Override
-    public void onAdLoaded(Ad ad) {
-
-    }
-
-    @Override
-    public void onAdClicked(Ad ad) {
-
-    }
-
-    @Override
-    public void onLoggingImpression(Ad ad) {
-
-    }
-
-    @Override
-    public void onRewardedVideoClosed() {
-
     }
 
     private boolean isNetworkAvailable() {
